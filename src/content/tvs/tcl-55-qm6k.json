@@ -1,0 +1,42 @@
+{
+  "name": "TCL 55\" QM6K Series QD-Mini LED 4K Google TV (55QM6K, 2025 Model)",
+  "brand": "TCL",
+  "model": "55QM6K",
+  "price": 499.99,
+  "original_price": 599.99,
+  "affiliate_link": "https://amzn.to/your-tcl-qm6k-affiliate-link | https://www.amazon.com/TCL-55-Inch-QD-Mini-Google-Mini-LED/dp/B0DSR9CHB1/ref=zg_bs_g_172659_d_sccl_30/131-8774751-7631420?th=1",
+  "screen_size": 55,
+  "resolution": "4K UHD (3840 x 2160)",
+  "display_type": "QD-Mini LED",
+  "smart_platform": "Google TV",
+  "hdr_support": ["Dolby Vision", "HDR10+", "HDR10", "HLG"],
+  "refresh_rate": 144,
+  "gaming_features": [
+    "Game Accelerator 288 VRR",
+    "Auto Game Mode (ALLM)",
+    "GameBar",
+    "HDMI 2.1"
+  ],
+  "connectivity": ["HDMI 2.1", "USB", "Wi-Fi", "Ethernet", "Bluetooth"],
+  "audio": "Onkyo 2.1 Channel System with Built-in Subwoofer, Dolby Atmos, DTS Virtual:X",
+  "dimensions": "See Technical Details",
+  "weight": "See Technical Details",
+  "energy_rating": "N/A",
+  "rating": 4.4,
+  "image": "/images/tvs/tcl-55qm6k-qd-miniled.jpeg",
+  "featured": true,
+  "discount": 17,
+  "key_specs": ["QD-Mini LED with Halo Control", "144Hz Native Refresh Rate", "Dolby Vision & Atmos", "Onkyo 2.1 Audio", "Google TV with Hands-Free Voice"],
+  "pros": [
+    "Exceptional picture quality with QD-Mini LED for high contrast and vibrant colors",
+    "Best-in-class 144Hz native refresh rate for ultra-smooth gaming and sports",
+    "Comprehensive support for all major HDR formats including Dolby Vision",
+    "Powerful Onkyo audio system with built-in subwoofer for a immersive sound",
+    "Advanced gaming features with VRR, ALLM, and a dedicated GameBar"
+  ],
+  "cons": [
+    "A small number of users report units arriving dead on arrival (DOA)",
+    "Premium features come at a higher price point than basic models",
+    "The advanced Halo Control system may require some picture calibration for optimal performance"
+  ]
+}

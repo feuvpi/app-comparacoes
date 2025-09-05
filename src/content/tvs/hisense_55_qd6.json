@@ -1,0 +1,38 @@
+{
+  "name": "Hisense 55\" QD6 Series QLED 4K UHD Smart Fire TV (55QD6QF, 2025 Model)",
+  "brand": "Hisense",
+  "model": "55QD6QF",
+  "price": 257.99,
+  "original_price": 279.99,
+  "affiliate_link": "https://amzn.to/your-hisense-qd6-affiliate-link | https://www.amazon.com/Hisense-55QD6QF-Remote-Vision-Motion/dp/B0DYS29P6M/ref=zg_bs_g_172659_d_sccl_41/131-8774751-7631420?th=1",
+  "screen_size": 55,
+  "resolution": "4K UHD (3840 x 2160)",
+  "display_type": "QLED",
+  "smart_platform": "Fire TV",
+  "hdr_support": ["Dolby Vision", "HDR10+", "HDR10"],
+  "refresh_rate": 60,
+  "gaming_features": ["Game Mode Plus", "VRR", "ALLM"],
+  "connectivity": ["HDMI", "USB", "Wi-Fi", "Works with Apple AirPlay"],
+  "audio": "Dolby Atmos",
+  "dimensions": "48.6 x 28.2 x 2.9 inches (without stand)",
+  "weight": 20.5,
+  "energy_rating": "N/A",
+  "rating": 4.0,
+  "image": "/images/tvs/hisense-55qd6qf-qled.jpeg",
+  "featured": false,
+  "discount": 8,
+  "key_specs": ["QLED with Billion+ Colors", "Dolby Vision & Dolby Atmos", "Game Mode Plus with VRR & ALLM", "Built-in Alexa", "AI 4K Upscaler"],
+  "pros": [
+    "Exceptional value, offering QLED and Dolby Vision at a very low price",
+    "Excellent picture quality with vibrant colors and deep blacks",
+    "Comprehensive gaming features including VRR and ALLM",
+    "Surprisingly good Dolby Atmos sound for a budget TV",
+    "Integrated Fire TV with Alexa is user-friendly"
+  ],
+  "cons": [
+    "Mixed reports on reliability; some units stop working",
+    "Performance and menu navigation can be slow",
+    "Motion Rate 120 indicates a 60Hz native panel (motion is enhanced)",
+    "Build quality reflects the budget nature of the TV"
+  ]
+}

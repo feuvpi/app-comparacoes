@@ -1,0 +1,46 @@
+{
+  "name": "Insignia 55\" F50 Series 4K UHD Smart Fire TV (NS-55F501NA26)",
+  "brand": "Insignia",
+  "model": "NS-55F501NA26",
+  "price": 189.97,
+  "original_price": 349.99,
+  "affiliate_link": "https://amzn.to/your-insignia-affiliate-link | https://www.amazon.com/INSIGNIA-55-inch-4K-UHD-Fire-TV/dp/B0F1BXQNR5/ref=zg_bs_g_172659_d_sccl_11/131-8774751-7631420?th=1",
+  "screen_size": 55,
+  "resolution": "4K UHD (3840 x 2160)",
+  "display_type": "LED",
+  "smart_platform": "Fire TV",
+  "hdr_support": ["HDR10"],
+  "refresh_rate": 60,
+  "gaming_features": [],
+  "connectivity": [
+    "3x HDMI (1x eARC)",
+    "Composite (AV) Input",
+    "Digital Optical Output",
+    "USB",
+    "Ethernet",
+    "Wi-Fi"
+  ],
+  "audio": "DTS Virtual:X, Supports HDMI eARC",
+  "dimensions": "48.35 x 30.09 x 10.39 inches (with stand)",
+  "weight": 46.1,
+  "energy_rating": "N/A",
+  "rating": 4.2,
+  "image": "/images/tvs/insignia-55f501na26.jpeg",
+  "featured": false,
+  "discount": 46,
+  "key_specs": ["4K HDR10", "Integrated Fire TV", "DTS Virtual:X Sound", "HDMI eARC", "Incredible Value"],
+  "pros": [
+    "Extremely affordable price point",
+    "Simple setup and user-friendly Fire TV interface",
+    "Includes HDMI eARC for high-quality audio passthrough",
+    "Good selection of ports including composite for older devices",
+    "Solid 4K picture quality for the price"
+  ],
+  "cons": [
+    "Mixed user reports on reliability and screen glitches/flickering",
+    "Sound quality is a common criticism; external speakers recommended",
+    "Limited to basic HDR10 support (no Dolby Vision or HDR10+)",
+    "Performance and menu navigation can be slow/laggy according to some users",
+    "No advanced gaming features (VRR, ALLM)"
+  ]
+}

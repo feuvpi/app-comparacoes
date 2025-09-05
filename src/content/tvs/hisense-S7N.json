@@ -1,0 +1,38 @@
+{
+  "name": "Hisense 55\" S7N CanvasTV Series QLED 4K Google TV (55S7N) - with Frame",
+  "brand": "Hisense",
+  "model": "55S7N",
+  "price": 898.09,
+  "original_price": 999.99,
+  "affiliate_link": "https://amzn.to/your-hisense-canvastv-affiliate-link | https://www.amazon.com/Hisense-55-Inch-CanvasTV-Vision-55S7N/dp/B0D2PNH494/ref=zg_bs_g_172659_d_sccl_12/131-8774751-7631420?th=1",
+  "screen_size": 55,
+  "resolution": "4K UHD (3840 x 2160)",
+  "display_type": "QLED with Hi-Matte Anti-Glare Display",
+  "smart_platform": "Google TV",
+  "hdr_support": ["Dolby Vision", "HDR"],
+  "refresh_rate": 144,
+  "gaming_features": ["Game Mode PRO", "VRR (48-144Hz)"],
+  "connectivity": ["HDMI", "USB", "Wi-Fi", "Bluetooth"],
+  "audio": "Multi-Channel 2.0.2 Surround Sound",
+  "dimensions": "48.5 x 28 x 1.4 inches (without stand/frame)",
+  "weight": 40.3,
+  "energy_rating": "N/A",
+  "rating": 4.5,
+  "image": "/images/tvs/hisense-55s7n-canvastv.jpeg",
+  "featured": true,
+  "discount": 10,
+  "key_specs": ["Art Mode with Magnetic Frames", "144Hz Native Refresh Rate", "Hi-Matte Anti-Glare Display", "Included UltraSlim Wall Mount", "Filmmaker Mode"],
+  "pros": [
+    "Unique Art Mode transforms the TV into a beautiful piece of decor",
+    "Best-in-class 144Hz native refresh rate for ultra-smooth motion",
+    "Hi-Matte display eliminates glare and looks like a real canvas",
+    "Includes magnetic frames and an ultra-slim wall mount",
+    "Excellent picture quality with QLED and Dolby Vision"
+  ],
+  "cons": [
+    "Premium price for design-focused features",
+    "Some user reports of reliability issues after a few months",
+    "The matte display, while great for art, may not provide the same pop as a glossy screen in a dark home theater",
+    "Heavier than standard TVs due to the integrated design"
+  ]
+}

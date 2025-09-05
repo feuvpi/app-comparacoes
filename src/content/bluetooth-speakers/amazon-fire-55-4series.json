@@ -1,0 +1,46 @@
+{
+  "name": "Amazon Fire TV 55\" 4-Series 4K UHD smart TV (2024 Release)",
+  "brand": "Amazon",
+  "model": "4K55N400A",
+  "price": 359.99,
+  "original_price": 459.99,
+  "affiliate_link": "https://amzn.to/your-firetv-affiliate-link | https://www.amazon.com/amazon-fire-tv-55-inch-4-series-4k-smart-tv/dp/B0CZBS9GKV/ref=zg_bs_g_172659_d_sccl_20/131-8774751-7631420?th=1",
+  "screen_size": 55,
+  "resolution": "4K UHD (3840 x 2160)",
+  "display_type": "LED",
+  "smart_platform": "Fire OS",
+  "hdr_support": ["HDR10", "HLG"],
+  "refresh_rate": 60,
+  "gaming_features": [],
+  "connectivity": [
+    "4x HDMI (1x HDMI 2.1 with eARC)",
+    "Digital Optical Audio Output",
+    "USB",
+    "Ethernet",
+    "Wi-Fi",
+    "Bluetooth"
+  ],
+  "audio": "Dolby Digital Plus, 16W Total (8W + 8W)",
+  "dimensions": "48.6 x 28.3 x 3.6 inches (without stand)",
+  "weight": 25,
+  "energy_rating": "N/A",
+  "rating": 4.4,
+  "image": "/images/tvs/amazon-fire-tv-4-series-55.jpeg",
+  "featured": false,
+  "discount": 22,
+  "key_specs": ["4K HDR with HDR10 & HLG", "Built-in Alexa Voice Remote", "Ultra-slim 5.7mm bezel", "HDMI eARC support", "Guaranteed software updates"],
+  "pros": [
+    "Deep integration with Alexa and the Amazon ecosystem",
+    "Clean, modern design with very slim bezels",
+    "Guaranteed software security updates for at least 4 years",
+    "Includes a versatile Alexa Voice Remote Enhanced",
+    "Good selection of ports including HDMI eARC"
+  ],
+  "cons": [
+    "Mixed user reports on reliability and device stopping working",
+    "Sound quality receives mixed reviews; external speakers may be needed",
+    "Some users report slow startup and menu response times",
+    "Limited to HDR10 and HLG (no Dolby Vision support)",
+    "No advanced gaming features like VRR or ALLM"
+  ]
+}

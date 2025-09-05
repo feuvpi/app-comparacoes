@@ -1,0 +1,39 @@
+{
+  "name": "Samsung 55\" Class Crystal UHD U8000F 4K Smart TV (2025 Model)",
+  "brand": "Samsung",
+  "model": "UN55U8000FFXZA",
+  "price": 377.99,
+  "original_price": 377.99,
+  "affiliate_link": "https://amzn.to/your-samsung-u8000f-affiliate-link | https://www.amazon.com/Samsung-Processor-MetalStream-Security-Compatible/dp/B0DXMW74JZ/ref=zg_bs_g_172659_d_sccl_34/131-8774751-7631420?th=1",
+  "screen_size": 55,
+  "resolution": "4K UHD (3840 x 2160)",
+  "display_type": "Crystal UHD (LED)",
+  "smart_platform": "Samsung Tizen",
+  "hdr_support": ["HDR"],
+  "refresh_rate": 60,
+  "gaming_features": ["Game Mode"],
+  "connectivity": ["HDMI", "USB", "Wi-Fi", "Ethernet", "Compatible with Alexa"],
+  "audio": "Built-In Speaker",
+  "dimensions": "48.2 x 29.9 x 7.8 inches (with stand)",
+  "weight": 25.6,
+  "energy_rating": "N/A",
+  "rating": 4.1,
+  "image": "/images/tvs/samsung-55u8000f-crystal-uhd.jpeg",
+  "featured": false,
+  "discount": 0,
+  "key_specs": ["Crystal Processor 4K", "Samsung TV Plus Free Content", "MetalStream Design", "Knox Security", "Alexa Compatible"],
+  "pros": [
+    "Excellent 4K picture quality and upscaling for the price",
+    "Elegant, sleek design with a metal build and slim bezels",
+    "Access to thousands of free channels via Samsung TV Plus",
+    "Strong security features with Samsung Knox",
+    "Easy to set up and use"
+  ],
+  "cons": [
+    "Sound quality is frequently criticized; external speakers are highly recommended",
+    "Multiple user reports of remote control malfunctions or failures",
+    "Higher-than-average number of reports of units arriving with broken screens",
+    "Basic HDR support (not specifically HDR10+ or Dolby Vision)",
+    "Limited gaming features compared to other models"
+  ]
+}

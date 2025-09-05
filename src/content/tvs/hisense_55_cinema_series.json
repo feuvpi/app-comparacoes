@@ -1,0 +1,38 @@
+{
+  "name": "Hisense 55\" E6 Cinema Series QLED 4K UHD Smart Fire TV (55E6QF, 2025 Model)",
+  "brand": "Hisense",
+  "model": "55E6QF",
+  "price": 289.99,
+  "original_price": 429.99,
+  "affiliate_link": "https://amzn.to/your-hisense-e6-affiliate-link",
+  "screen_size": 55,
+  "resolution": "4K UHD (3840 x 2160)",
+  "display_type": "QLED",
+  "smart_platform": "Fire TV",
+  "hdr_support": ["Dolby Vision", "HDR10+ Adaptive", "HDR10", "HLG"],
+  "refresh_rate": 60,
+  "gaming_features": ["Game Mode Plus"],
+  "connectivity": ["HDMI", "USB", "Wi-Fi 6", "Bluetooth", "Alexa Built-in"],
+  "audio": "Dolby Atmos",
+  "dimensions": "See Technical Details",
+  "weight": "See Technical Details",
+  "energy_rating": "N/A",
+  "rating": 3.9,
+  "image": "/images/tvs/hisense-55e6qf-cinema-series.jpeg",
+  "featured": false,
+  "discount": 33,
+  "key_specs": ["QLED with AI Light Sensor", "Dolby Vision & Atmos", "HDR10+ Adaptive", "Filmmaker Mode", "Wi-Fi 6"],
+  "pros": [
+    "Excellent HDR support with Dolby Vision and adaptive HDR10+",
+    "Strong feature set for the price, including QLED and Dolby Atmos",
+    "Useful AI Light Sensor for automatic brightness adjustment",
+    "Includes Filmmaker Mode for content as intended",
+    "Modern Wi-Fi 6 connectivity for stable streaming"
+  ],
+  "cons": [
+    "Lower customer rating (3.9) suggests potential quality or consistency issues",
+    "Motion Rate 120 indicates a standard 60Hz panel",
+    "Gaming features are basic (Game Mode Plus only, no VRR/ALLM)",
+    "Limited number of reviews (19) makes long-term reliability less certain"
+  ]
+}
