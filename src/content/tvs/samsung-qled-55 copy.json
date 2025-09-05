@@ -1,0 +1,37 @@
+{
+  "name": "Samsung Smart TV 55\" QLED 4K Q80B",
+  "brand": "Samsung",
+  "model": "QN55Q80BAFXZX",
+  "price": 2899,
+  "original_price": 3299,
+  "affiliate_link": "https://amzn.to/samsung-q80b-55",
+  "screen_size": 55,
+  "resolution": "4K UHD (3840x2160)",
+  "display_type": "QLED",
+  "smart_platform": "Tizen",
+  "hdr_support": ["HDR10", "HDR10+", "HLG"],
+  "refresh_rate": 120,
+  "gaming_features": ["VRR", "ALLM", "Game Mode", "Motion Xcelerator Turbo+"],
+  "connectivity": ["4x HDMI 2.1", "2x USB", "Wi-Fi 6", "Bluetooth 5.2", "Ethernet"],
+  "audio": "2.2.2 Canais, 60W, Object Tracking Sound+",
+  "dimensions": "122.5 x 70.2 x 2.57 cm",
+  "weight": 17.4,
+  "energy_rating": "A",
+  "rating": 4.6,
+  "image": "/images/tvs/samsung-q80b-55.jpg",
+  "featured": true,
+  "discount": 12,
+  "key_specs": ["QLED 4K", "120Hz", "HDR10+", "Gaming Hub", "Alexa Built-in"],
+  "pros": [
+    "Excelente qualidade de imagem QLED",
+    "Ótima para jogos com 120Hz e VRR",
+    "Som imersivo Object Tracking Sound+",
+    "Interface Tizen rápida e intuitiva",
+    "Suporte completo a HDR"
+  ],
+  "cons": [
+    "Não possui Dolby Vision",
+    "Ângulos de visão limitados",
+    "Preço elevado"
+  ]
+}

@@ -1,363 +1,769 @@
 <script lang="ts">
-	import { page } from '$app/stores';
-	import { goto } from '$app/navigation';
-	import { Grid, Table, GitCompare, SlidersHorizontal, Search, TrendingUp, Package } from 'lucide-svelte';
+	import { 
+		getAllCategories, 
+		loadProductsByCategory, 
+		generateComparisonFields,
+		type Product, 
+		type ComparisonField 
+	} from '$lib/utils/content';
+	import { onMount } from 'svelte';
 	
-	// Import components
-	import ProductCard from '$lib/components/ProductCard.svelte';
-	import ComparisonTable from '$lib/components/ComparisonTable.svelte';
-	import SideBySideComparison from '$lib/components/SideBySideComparison.svelte';
+	export let products: Product[] = [];
+	export let category: string = '';
 	
-	// Import types
-	import type { CategoryPageData, Product } from '$lib/utils/types.js';
-	import type { PageData } from './$types';
-	
-	export let data: PageData;
-	
-	// Destructure data
-	$: ({ 
-		category, 
-		categoryDisplayName, 
-		products, 
-		allProducts,
-		comparisonFields, 
-		filters, 
-		stats, 
-		meta,
-		currentFilters 
-	} = data);
-	
-	// Component state
-	let viewMode: 'grid' | 'table' | 'comparison' = 'grid';
-	let selectedProducts: Product[] = [];
-	let showFilters = false;
-	let searchQuery = currentFilters?.search || '';
-	let sortBy = currentFilters?.sortBy || 'name';
-	let sortOrder: 'asc' | 'desc' = (currentFilters?.sortOrder as 'asc' | 'desc') || 'asc';
-	
-	// Update URL when filters change
-	function updateURL() {
-		const url = new URL($page.url);
-		const params = new URLSearchParams();
-		
-		if (searchQuery.trim()) params.set('search', searchQuery.trim());
-		if (sortBy !== 'name') params.set('sort', sortBy);
-		if (sortOrder !== 'asc') params.set('order', sortOrder);
-		
-		const newUrl = `${url.pathname}${params.toString() ? '?' + params.toString() : ''}`;
-		goto(newUrl, { replaceState: true, noScroll: true });
-	}
-	
-	// Handle product selection for comparison
-	function toggleProductSelection(event: CustomEvent<Product>) {
-		const product = event.detail;
-		const index = selectedProducts.findIndex(p => p.slug === product.slug);
-		
-		if (index === -1) {
-			// Add product (max 4)
-			if (selectedProducts.length < 4) {
-				selectedProducts = [...selectedProducts, product];
+	let displayProducts: Product[] = [];
+	let availableCategories: string[] = [];
+	let comparisonFields: ComparisonField[] = [];
+	let isLoading = true;
+
+	let scrollContainer: HTMLElement;
+	let isScrolledLeft = true;
+	let isScrolledRight = false;
+
+	onMount(async () => {
+		// Load categories and products
+		try {
+			availableCategories = await getAllCategories();
+			console.log('Available categories:', availableCategories);
+			
+			// If no products are passed as props, load them based on category
+			if (products.length === 0) {
+				if (category && availableCategories.includes(category)) {
+					displayProducts = await loadProductsByCategory(category);
+				} else if (availableCategories.length > 0) {
+					// Load products from the first category by default
+					category = availableCategories[0];
+					displayProducts = await loadProductsByCategory(category);
+				}
+			} else {
+				displayProducts = products;
 			}
-		} else {
-			// Remove product
-			selectedProducts = selectedProducts.filter(p => p.slug !== product.slug);
+
+			// Generate comparison fields dynamically
+			if (displayProducts.length > 0) {
+				comparisonFields = generateComparisonFields(displayProducts);
+				console.log('Generated comparison fields:', comparisonFields);
+			}
+		} catch (error) {
+			console.error('Error loading products:', error);
+		} finally {
+			isLoading = false;
 		}
+
+		if (scrollContainer) {
+			scrollContainer.addEventListener('scroll', handleScroll);
+			handleScroll();
+		}
+	});
+
+	function handleScroll() {
+		if (scrollContainer) {
+			isScrolledLeft = scrollContainer.scrollLeft === 0;
+			isScrolledRight = scrollContainer.scrollLeft >= 
+				(scrollContainer.scrollWidth - scrollContainer.clientWidth - 10);
+		}
+	}
+
+	function scrollLeft() {
+		scrollContainer?.scrollBy({ left: -300, behavior: 'smooth' });
+	}
+
+	function scrollRight() {
+		scrollContainer?.scrollBy({ left: 300, behavior: 'smooth' });
+	}
+
+	function formatPrice(price: number): string {
+		return new Intl.NumberFormat('pt-BR', {
+			style: 'currency',
+			currency: 'BRL'
+		}).format(price);
+	}
+
+	function renderStars(rating: number): string {
+		const fullStars = Math.floor(rating);
+		const hasHalfStar = rating % 1 >= 0.5;
+		const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
 		
-		// Auto-switch to comparison mode if 2+ products selected
-		if (selectedProducts.length >= 2 && viewMode !== 'comparison') {
-			viewMode = 'comparison';
+		return '★'.repeat(fullStars) + 
+			   (hasHalfStar ? '☆' : '') + 
+			   '☆'.repeat(emptyStars);
+	}
+
+	// Function to handle category change
+	async function changeCategory(newCategory: string) {
+		isLoading = true;
+		try {
+			category = newCategory;
+			displayProducts = await loadProductsByCategory(newCategory);
+			
+			// Regenerate comparison fields for new category
+			if (displayProducts.length > 0) {
+				comparisonFields = generateComparisonFields(displayProducts);
+			}
+		} catch (error) {
+			console.error('Error changing category:', error);
+		} finally {
+			isLoading = false;
 		}
-		
-		// Switch back to grid if less than 2 products
-		if (selectedProducts.length < 2 && viewMode === 'comparison') {
-			viewMode = 'grid';
-		}
 	}
-	
-	function removeProductFromComparison(event: CustomEvent<{index: number}>) {
-		const index = event.detail.index;
-		selectedProducts = selectedProducts.filter((_, i) => i !== index);
+
+	// Function to get product field value
+	function getProductFieldValue(product: Product, field: ComparisonField): any {
+		return product[field.key];
 	}
-	
-	function handleProductView(event: CustomEvent<Product>) {
-		const product = event.detail;
-		goto(`/${category}/${product.slug}`);
-	}
-	
-	// Sort options
-	const sortOptions = [
-		{ value: 'name', label: 'Nome A-Z' },
-		{ value: 'price', label: 'Menor Preço' },
-		{ value: 'rating', label: 'Melhor Avaliação' },
-		{ value: 'brand', label: 'Marca' }
-	];
-	
-	// Get unique brands for filter
-	$: uniqueBrands = [...new Set(allProducts.map(p => p.brand).filter(Boolean))].sort();
-	
-	$: hasFiltersApplied = searchQuery || 
-		currentFilters.brandFilter || 
-		currentFilters.minPrice || 
-		currentFilters.maxPrice;
 </script>
 
-<svelte:head>
-	<title>{meta.title}</title>
-	<meta name="description" content={meta.description} />
-	<meta name="keywords" content={meta.keywords.join(', ')} />
-	<meta property="og:title" content={meta.title} />
-	<meta property="og:description" content={meta.description} />
-	<meta property="og:image" content={meta.ogImage} />
-	<link rel="canonical" href={meta.canonical} />
-	
-	{@html `<script type="application/ld+json">${JSON.stringify(meta.schema)}</script>`}
-</svelte:head>
-
-<div class="min-h-screen bg-gradient-to-b from-gray-50 to-white">
-	<!-- Hero Section -->
-	<section class="bg-gradient-to-r from-blue-600 to-indigo-700 text-white py-16">
-		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-			<div class="text-center">
-				<h1 class="text-4xl md:text-5xl font-bold mb-4">
-					Compare {categoryDisplayName}
-				</h1>
-				<p class="text-xl text-blue-100 mb-8 max-w-3xl mx-auto">
-					{meta.description}
-				</p>
-				
-				<!-- Stats -->
-				<div class="flex flex-wrap justify-center gap-8 text-sm">
-					<div class="flex items-center gap-2">
-						<Package size={20} />
-						<span><strong>{stats.productCount}</strong> produtos</span>
-					</div>
-					{#if stats.priceRange}
-						<div class="flex items-center gap-2">
-							<TrendingUp size={20} />
-							<span>A partir de <strong>R$ {Math.floor(stats.priceRange.min)}</strong></span>
-						</div>
-					{/if}
-					{#if stats.topBrands.length > 0}
-						<div class="flex items-center gap-2">
-							<span>Marcas: <strong>{stats.topBrands.slice(0, 3).map(b => b.brand).join(', ')}</strong></span>
-						</div>
-					{/if}
-				</div>
-			</div>
-		</div>
-	</section>
-	
-	<!-- Controls Section -->
-	<section class="bg-white border-b sticky top-0 z-40 shadow-sm">
-		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-			<div class="flex flex-wrap items-center justify-between gap-4">
-				<!-- Search -->
-				<div class="flex-1 min-w-64 max-w-md">
-					<div class="relative">
-						<Search class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
-						<input
-							type="search"
-							placeholder="Buscar produtos..."
-							bind:value={searchQuery}
-							on:keydown={(e) => e.key === 'Enter' && updateURL()}
-							class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-						/>
-					</div>
-				</div>
-				
-				<!-- View Controls -->
-				<div class="flex items-center gap-2">
-					<!-- Sort -->
-					<select 
-						bind:value={sortBy} 
-						on:change={updateURL}
-						class="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 text-sm"
-					>
-						{#each sortOptions as option}
-							<option value={option.value}>{option.label}</option>
-						{/each}
-					</select>
-					
-					<!-- View Mode Toggle -->
-					<div class="flex bg-gray-100 rounded-lg p-1">
-						<button
-							class="flex items-center gap-2 px-3 py-1.5 text-sm font-medium rounded-md transition-colors"
-							class:bg-white={viewMode === 'grid'}
-							class:shadow-sm={viewMode === 'grid'}
-							class:text-blue-600={viewMode === 'grid'}
-							class:text-gray-600={viewMode !== 'grid'}
-							on:click={() => viewMode = 'grid'}
+<div class="comparison-wrapper">
+	<!-- Header with title and controls -->
+	<div class="comparison-header">
+		<div class="header-content">
+			<h1 class="comparison-title">
+				{category ? `${category.charAt(0).toUpperCase() + category.slice(1)} ` : ''}
+				Tabela de Comparação
+			</h1>
+			<div class="header-controls">
+				<!-- Category selector -->
+				{#if availableCategories.length > 1}
+					<div class="category-selector">
+						<select 
+							value={category} 
+							on:change={(e) => changeCategory(e.target.value)}
+							class="category-dropdown"
 						>
-							<Grid size={16} />
-							<span class="hidden sm:inline">Grade</span>
-						</button>
-						
-						<button
-							class="flex items-center gap-2 px-3 py-1.5 text-sm font-medium rounded-md transition-colors"
-							class:bg-white={viewMode === 'table'}
-							class:shadow-sm={viewMode === 'table'}
-							class:text-blue-600={viewMode === 'table'}
-							class:text-gray-600={viewMode !== 'table'}
-							on:click={() => viewMode = 'table'}
-						>
-							<Table size={16} />
-							<span class="hidden sm:inline">Tabela</span>
-						</button>
-						
-						{#if selectedProducts.length >= 2}
-							<button
-								class="flex items-center gap-2 px-3 py-1.5 text-sm font-medium rounded-md transition-colors relative"
-								class:bg-white={viewMode === 'comparison'}
-								class:shadow-sm={viewMode === 'comparison'}
-								class:text-blue-600={viewMode === 'comparison'}
-								class:text-gray-600={viewMode !== 'comparison'}
-								on:click={() => viewMode = 'comparison'}
-							>
-								<GitCompare size={16} />
-								<span class="hidden sm:inline">Comparar</span>
-								<span class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-									{selectedProducts.length}
-								</span>
-							</button>
-						{/if}
+							{#each availableCategories as cat}
+								<option value={cat}>
+									{cat.charAt(0).toUpperCase() + cat.slice(1)}
+								</option>
+							{/each}
+						</select>
 					</div>
-					
-					<!-- Filters Toggle -->
-					<button
-						class="flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
-						class:bg-blue-50={showFilters}
-						class:border-blue-300={showFilters}
-						class:text-blue-600={showFilters}
-						on:click={() => showFilters = !showFilters}
+				{/if}
+				
+				<div class="filters-section">
+					<button class="filter-btn active">
+						<span class="filter-icon">🔍</span>
+						Filtros
+					</button>
+					<button class="filter-btn">
+						<span class="filter-icon">🗂️</span>
+						Limpar filtros
+					</button>
+				</div>
+				<div class="scroll-controls">
+					<button 
+						class="scroll-btn" 
+						class:disabled={isScrolledLeft}
+						on:click={scrollLeft}
 					>
-						<SlidersHorizontal size={16} />
-						<span>Filtros</span>
-						{#if hasFiltersApplied}
-							<span class="bg-red-500 text-white text-xs rounded-full w-2 h-2"></span>
-						{/if}
+						←
+					</button>
+					<button 
+						class="scroll-btn" 
+						class:disabled={isScrolledRight}
+						on:click={scrollRight}
+					>
+						→
 					</button>
 				</div>
 			</div>
-			
-			<!-- Results Info -->
-			<div class="flex items-center justify-between mt-4 text-sm text-gray-600">
-				<div>
-					Mostrando <strong>{products.length}</strong> de <strong>{allProducts.length}</strong> produtos
-					{#if hasFiltersApplied}
-						<button 
-							class="ml-2 text-blue-600 hover:text-blue-800 underline"
-							on:click={() => goto(`/${category}`)}
-						>
-							Limpar filtros
-						</button>
-					{/if}
-				</div>
-				
-				{#if selectedProducts.length > 0}
-					<div class="text-blue-600">
-						{selectedProducts.length} produto{selectedProducts.length === 1 ? '' : 's'} selecionado{selectedProducts.length === 1 ? '' : 's'} para comparação
-					</div>
-				{/if}
+		</div>
+	</div>
+
+	<!-- Loading state -->
+	{#if isLoading}
+		<div class="loading-state">
+			<div class="loading-spinner"></div>
+			<p>Carregando produtos...</p>
+		</div>
+	{:else if displayProducts.length === 0}
+		<div class="empty-state">
+			<p>Nenhum produto encontrado para esta categoria.</p>
+			<p>Adicione arquivos JSON na pasta /src/content/{category}/</p>
+		</div>
+	{:else}
+		<!-- Comparison table -->
+		<div class="comparison-container">
+			<div class="table-scroll" bind:this={scrollContainer}>
+				<table class="comparison-table">
+					<!-- Product headers -->
+					<thead>
+						<tr class="product-header">
+							<th class="field-label sticky-column">
+								<div class="field-content">
+									<span class="field-name">Produtos</span>
+								</div>
+							</th>
+							{#each displayProducts as product, index}
+								<th class="product-column" class:featured={product.featured}>
+									<div class="product-card">
+										<div class="product-image-container">
+											<img 
+												src={product.image} 
+												alt={product.name}
+												class="product-image"
+												loading="lazy"
+											/>
+											{#if product.featured}
+												<span class="featured-badge">Destaque</span>
+											{/if}
+											{#if product.discount}
+												<span class="discount-badge">-{product.discount}%</span>
+											{/if}
+										</div>
+										<div class="product-info">
+											<h3 class="product-name">{product.name}</h3>
+											<p class="product-brand">{product.brand || ''}</p>
+											{#if product.key_specs && Array.isArray(product.key_specs)}
+												<div class="key-specs">
+													{#each product.key_specs.slice(0, 3) as spec}
+														<span class="spec-tag">{spec}</span>
+													{/each}
+												</div>
+											{/if}
+										</div>
+									</div>
+								</th>
+							{/each}
+						</tr>
+					</thead>
+
+					<!-- Comparison rows -->
+					<tbody>
+						{#each comparisonFields as field}
+							<tr class="comparison-row" class:highlight={field.key === 'price' || field.key === 'rating'}>
+								<td class="field-label sticky-column">
+									<div class="field-content">
+										<span class="field-name">{field.label}</span>
+									</div>
+								</td>
+								{#each displayProducts as product}
+									{@const fieldValue = getProductFieldValue(product, field)}
+									<td class="product-cell" class:featured={product.featured}>
+										<div class="cell-content">
+											{#if field.type === 'rating' && fieldValue}
+												<div class="rating-display">
+													<div class="stars">{renderStars(fieldValue)}</div>
+													<span class="rating-number">{fieldValue}</span>
+												</div>
+											{:else if field.type === 'price' && fieldValue}
+												<div class="price-display">
+													{#if product.original_price && product.original_price > fieldValue}
+														<span class="original-price">{formatPrice(product.original_price)}</span>
+													{/if}
+													<span class="current-price">{formatPrice(fieldValue)}</span>
+													<a 
+														href={product.affiliate_link} 
+														class="buy-btn"
+														target="_blank"
+														rel="noopener noreferrer"
+													>
+														MELHOR PREÇO
+													</a>
+												</div>
+											{:else if field.type === 'array' && Array.isArray(fieldValue)}
+												<div class="array-display">
+													{#each fieldValue.slice(0, 3) as item}
+														<span class="array-item">{item}</span>
+													{/each}
+													{#if fieldValue.length > 3}
+														<span class="more-items">+{fieldValue.length - 3}</span>
+													{/if}
+												</div>
+											{:else if fieldValue !== undefined && fieldValue !== null && fieldValue !== ''}
+												<span class="text-value">
+													{fieldValue}{field.suffix || ''}
+												</span>
+											{:else}
+												<span class="empty-value">—</span>
+											{/if}
+										</div>
+									</td>
+								{/each}
+							</tr>
+						{/each}
+					</tbody>
+				</table>
 			</div>
 		</div>
-	</section>
-	
-	<!-- Filters Panel (Collapsible) -->
-	{#if showFilters}
-		<section class="bg-gray-50 border-b">
-			<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-				<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-					<!-- Brand Filter -->
-					{#if uniqueBrands.length > 1}
-						<div>
-							<label class="block text-sm font-medium text-gray-700 mb-2">Marca</label>
-							<select class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
-								<option value="">Todas as marcas</option>
-								{#each uniqueBrands as brand}
-									<option value={brand}>{brand}</option>
-								{/each}
-							</select>
-						</div>
-					{/if}
-					
-					<!-- Price Range Filter -->
-					{#if stats.priceRange}
-						<div>
-							<label class="block text-sm font-medium text-gray-700 mb-2">
-								Faixa de Preço (R$ {Math.floor(stats.priceRange.min)} - R$ {Math.ceil(stats.priceRange.max)})
-							</label>
-							<div class="flex gap-2">
-								<input
-									type="number"
-									placeholder="Mín"
-									min={Math.floor(stats.priceRange.min)}
-									max={Math.ceil(stats.priceRange.max)}
-									class="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-								/>
-								<input
-									type="number"
-									placeholder="Máx"
-									min={Math.floor(stats.priceRange.min)}
-									max={Math.ceil(stats.priceRange.max)}
-									class="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-								/>
-							</div>
-						</div>
-					{/if}
-				</div>
-			</div>
-		</section>
 	{/if}
-	
-	<!-- Main Content -->
-	<main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-		{#if products.length === 0}
-			<!-- Empty State -->
-			<div class="text-center py-16">
-				<div class="w-24 h-24 mx-auto mb-6 bg-gray-100 rounded-full flex items-center justify-center">
-					<Search size={32} class="text-gray-400" />
-				</div>
-				<h3 class="text-xl font-semibold text-gray-900 mb-2">Nenhum produto encontrado</h3>
-				<p class="text-gray-600 mb-6">
-					Não encontramos produtos que correspondam aos seus filtros.
-				</p>
-				<button 
-					class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors"
-					on:click={() => goto(`/${category}`)}
-				>
-					Ver todos os produtos
-				</button>
-			</div>
-			
-		{:else if viewMode === 'grid'}
-			<!-- Product Grid -->
-			<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-				{#each products as product}
-					<ProductCard
-						{product}
-						selected={selectedProducts.some(p => p.slug === product.slug)}
-						showCompareButton={true}
-						on:toggle={toggleProductSelection}
-						on:view={handleProductView}
-					/>
-				{/each}
-			</div>
-			
-		{:else if viewMode === 'table'}
-			<!-- Comparison Table -->
-			<ComparisonTable
-				{products}
-				{comparisonFields}
-				{category}
-			/>
-			
-		{:else if viewMode === 'comparison'}
-			<!-- Side-by-Side Comparison -->
-			<SideBySideComparison
-				products={selectedProducts}
-				{comparisonFields}
-				on:remove={removeProductFromComparison}
-			/>
-		{/if}
-	</main>
 </div>
+
+<style>
+	.comparison-wrapper {
+		width: 100%;
+		background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+		min-height: 100vh;
+		color: white;
+		font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+	}
+
+	.comparison-header {
+		background: rgba(255, 255, 255, 0.05);
+		backdrop-filter: blur(10px);
+		border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+		padding: 2rem 0;
+		position: sticky;
+		top: 0;
+		z-index: 100;
+	}
+
+	.header-content {
+		max-width: 1400px;
+		margin: 0 auto;
+		padding: 0 2rem;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		gap: 2rem;
+	}
+
+	.comparison-title {
+		font-size: 2.5rem;
+		font-weight: 700;
+		background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+		background-clip: text;
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		margin: 0;
+	}
+
+	.header-controls {
+		display: flex;
+		align-items: center;
+		gap: 2rem;
+	}
+
+	.category-selector {
+		display: flex;
+		align-items: center;
+	}
+
+	.category-dropdown {
+		background: rgba(255, 255, 255, 0.1);
+		border: 1px solid rgba(255, 255, 255, 0.2);
+		color: white;
+		padding: 0.75rem 1.5rem;
+		border-radius: 50px;
+		font-weight: 500;
+		cursor: pointer;
+	}
+
+	.category-dropdown option {
+		background: #1a1a2e;
+		color: white;
+	}
+
+	.filters-section {
+		display: flex;
+		gap: 1rem;
+	}
+
+	.filter-btn {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		background: rgba(255, 255, 255, 0.1);
+		border: 1px solid rgba(255, 255, 255, 0.2);
+		color: white;
+		padding: 0.75rem 1.5rem;
+		border-radius: 50px;
+		font-weight: 500;
+		cursor: pointer;
+		transition: all 0.3s ease;
+	}
+
+	.filter-btn:hover {
+		background: rgba(255, 255, 255, 0.2);
+		transform: translateY(-2px);
+	}
+
+	.filter-btn.active {
+		background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+		border-color: transparent;
+	}
+
+	.scroll-controls {
+		display: flex;
+		gap: 0.5rem;
+	}
+
+	.scroll-btn {
+		width: 40px;
+		height: 40px;
+		border-radius: 50%;
+		background: rgba(255, 255, 255, 0.1);
+		border: 1px solid rgba(255, 255, 255, 0.2);
+		color: white;
+		font-size: 1.2rem;
+		cursor: pointer;
+		transition: all 0.3s ease;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.scroll-btn:hover:not(.disabled) {
+		background: rgba(255, 255, 255, 0.2);
+		transform: scale(1.1);
+	}
+
+	.scroll-btn.disabled {
+		opacity: 0.3;
+		cursor: not-allowed;
+	}
+
+	.loading-state, .empty-state {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		padding: 4rem 2rem;
+		text-align: center;
+	}
+
+	.loading-spinner {
+		width: 50px;
+		height: 50px;
+		border: 3px solid rgba(255, 255, 255, 0.1);
+		border-top: 3px solid #4facfe;
+		border-radius: 50%;
+		animation: spin 1s linear infinite;
+		margin-bottom: 1rem;
+	}
+
+	@keyframes spin {
+		0% { transform: rotate(0deg); }
+		100% { transform: rotate(360deg); }
+	}
+
+	.empty-state {
+		color: rgba(255, 255, 255, 0.6);
+	}
+
+	.comparison-container {
+		padding: 2rem;
+		max-width: 1400px;
+		margin: 0 auto;
+	}
+
+	.table-scroll {
+		overflow-x: auto;
+		border-radius: 20px;
+		background: rgba(255, 255, 255, 0.03);
+		backdrop-filter: blur(10px);
+		border: 1px solid rgba(255, 255, 255, 0.1);
+		scrollbar-width: thin;
+		scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+	}
+
+	.table-scroll::-webkit-scrollbar {
+		height: 8px;
+	}
+
+	.table-scroll::-webkit-scrollbar-track {
+		background: transparent;
+	}
+
+	.table-scroll::-webkit-scrollbar-thumb {
+		background: rgba(255, 255, 255, 0.3);
+		border-radius: 4px;
+	}
+
+	.comparison-table {
+		width: 100%;
+		border-collapse: collapse;
+		min-width: 800px;
+	}
+
+	.sticky-column {
+		position: sticky;
+		left: 0;
+		background: rgba(26, 26, 46, 0.95);
+		backdrop-filter: blur(10px);
+		z-index: 10;
+		border-right: 1px solid rgba(255, 255, 255, 0.1);
+	}
+
+	.product-header th {
+		padding: 0;
+		vertical-align: top;
+		position: relative;
+	}
+
+	.product-column {
+		min-width: 280px;
+		width: 280px;
+		border-left: 1px solid rgba(255, 255, 255, 0.05);
+	}
+
+	.product-column.featured {
+		background: linear-gradient(135deg, rgba(79, 172, 254, 0.1) 0%, rgba(0, 242, 254, 0.1) 100%);
+		border-left: 2px solid #4facfe;
+		border-right: 2px solid #4facfe;
+	}
+
+	.product-card {
+		padding: 1.5rem;
+		text-align: center;
+	}
+
+	.product-image-container {
+		position: relative;
+		margin-bottom: 1rem;
+	}
+
+	.product-image {
+		width: 120px;
+		height: 120px;
+		object-fit: cover;
+		border-radius: 15px;
+		border: 2px solid rgba(255, 255, 255, 0.1);
+		transition: transform 0.3s ease;
+	}
+
+	.product-image:hover {
+		transform: scale(1.05);
+	}
+
+	.featured-badge {
+		position: absolute;
+		top: -8px;
+		left: 50%;
+		transform: translateX(-50%);
+		background: linear-gradient(135deg, #ff6b6b 0%, #ffa500 100%);
+		color: white;
+		padding: 0.3rem 0.8rem;
+		border-radius: 20px;
+		font-size: 0.75rem;
+		font-weight: 600;
+		text-transform: uppercase;
+		letter-spacing: 0.5px;
+	}
+
+	.discount-badge {
+		position: absolute;
+		top: 8px;
+		right: 8px;
+		background: #ff4757;
+		color: white;
+		padding: 0.3rem 0.6rem;
+		border-radius: 8px;
+		font-size: 0.75rem;
+		font-weight: 600;
+	}
+
+	.product-info {
+		text-align: center;
+	}
+
+	.product-name {
+		font-size: 1.5rem;
+		font-weight: 600;
+		margin: 0 0 0.5rem 0;
+		line-height: 1.3;
+		color: white;
+	}
+
+	.product-brand {
+		color: rgba(255, 255, 255, 0.7);
+		font-size: 1.1rem;
+		margin: 0 0 1rem 0;
+	}
+
+	.key-specs {
+		display: flex;
+		flex-direction: column;
+		gap: 0.3rem;
+	}
+
+	.spec-tag {
+		background: rgba(255, 255, 255, 0.1);
+		color: rgba(255, 255, 255, 0.9);
+		padding: 0.3rem 0.6rem;
+		border-radius: 12px;
+		font-size: 0.99rem;
+		font-weight: 500;
+	}
+
+	.comparison-row {
+		border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+		transition: background-color 0.3s ease;
+	}
+
+	.comparison-row:hover {
+		background: rgba(255, 255, 255, 0.02);
+	}
+
+	.comparison-row.highlight {
+		background: rgba(79, 172, 254, 0.05);
+	}
+
+	.field-label {
+		font-size: 1.5rem;
+		width: 200px;
+		min-width: 200px;
+		padding: 1.5rem;
+	
+		align-self: center;
+		font-weight: 600;
+		color: rgba(255, 255, 255, 0.9);
+		border-right: 1px solid rgba(255, 255, 255, 0.1);
+	}
+
+	.field-content {
+		font-size: 1.5rem;
+		display: flex;
+		align-items: center;
+		height: 100%;
+	}
+
+	.product-cell {
+		padding: 1.5rem;
+		text-align: center;
+		border-left: 1px solid rgba(255, 255, 255, 0.05);
+		vertical-align: middle;
+	}
+
+	.product-cell.featured {
+		background: linear-gradient(135deg, rgba(79, 172, 254, 0.05) 0%, rgba(0, 242, 254, 0.05) 100%);
+		border-left: 1px solid rgba(79, 172, 254, 0.2);
+	}
+
+	.cell-content {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		min-height: 60px;
+	}
+
+	.rating-display {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 0.3rem;
+	}
+
+	.stars {
+		font-size: 1.2rem;
+		color: #ffd700;
+		letter-spacing: 2px;
+	}
+
+	.rating-number {
+		background: rgba(255, 215, 0, 0.2);
+		color: #ffd700;
+		padding: 0.3rem 0.6rem;
+		border-radius: 20px;
+		font-size: 0.85rem;
+		font-weight: 600;
+	}
+
+	.price-display {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 0.5rem;
+	}
+
+	.original-price {
+		color: rgba(255, 255, 255, 0.6);
+		text-decoration: line-through;
+		font-size: 0.95rem;
+		font-weight: 500;
+	}
+
+	.current-price {
+		font-size: 1.3rem;
+		font-weight: 700;
+		color: #4facfe;
+	}
+
+	.buy-btn {
+		background: linear-gradient(135deg, #ff6b6b 0%, #ffa500 100%);
+		color: white;
+		padding: 0.6rem 1.2rem;
+		border-radius: 25px;
+		text-decoration: none;
+		font-size: 0.8rem;
+		font-weight: 600;
+		text-transform: uppercase;
+		letter-spacing: 0.5px;
+		transition: all 0.3s ease;
+		border: none;
+		cursor: pointer;
+	}
+
+	.buy-btn:hover {
+		transform: translateY(-2px);
+		box-shadow: 0 8px 25px rgba(255, 107, 107, 0.3);
+	}
+
+	.array-display {
+		display: flex;
+		flex-direction: column;
+		gap: 0.3rem;
+	}
+
+	.array-item {
+		background: rgba(255, 255, 255, 0.1);
+		color: rgba(255, 255, 255, 0.9);
+		padding: 0.3rem 0.6rem;
+		border-radius: 12px;
+		font-size: 0.75rem;
+		font-weight: 500;
+	}
+
+	.more-items {
+		color: rgba(255, 255, 255, 0.6);
+		font-size: 0.75rem;
+		font-style: italic;
+	}
+
+	.text-value {
+		font-size: 1.5rem;
+		color: rgba(255, 255, 255, 0.9);
+		font-size: 0.9rem;
+	}
+
+	.empty-value {
+		color: rgba(255, 255, 255, 0.3);
+		font-style: italic;
+	}
+
+	@media (max-width: 768px) {
+		.header-content {
+			flex-direction: column;
+			gap: 1rem;
+		}
+
+		.comparison-title {
+			font-size: 1.8rem;
+			text-align: center;
+		}
+
+		.header-controls {
+			width: 100%;
+			justify-content: space-between;
+			flex-wrap: wrap;
+			gap: 1rem;
+		}
+
+		.category-selector {
+			width: 100%;
+		}
+
+		.category-dropdown {
+			width: 100%;
+		}
+
+		.product-column {
+			min-width: 240px;
+			width: 240px;
+		}
+
+		.comparison-container {
+			padding: 1rem;
+		}
+	}
+</style>

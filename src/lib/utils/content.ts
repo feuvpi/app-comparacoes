@@ -1,6 +1,6 @@
 /**
  * Content loading utilities for the comparison site
- * Handles markdown file processing and category management
+ * Handles JSON file processing and category management
  */
 
 export interface Product {
@@ -13,7 +13,6 @@ export interface Product {
 	rating?: number;
 	image: string;
 	slug: string;
-	content: any;
 	category: string;
 	key_specs?: string[];
 	pros?: string[];
@@ -21,6 +20,14 @@ export interface Product {
 	featured?: boolean;
 	discount?: number;
 	[key: string]: unknown; // Allow for category-specific fields
+}
+
+export interface ComparisonField {
+	key: string;
+	label: string;
+	type: 'text' | 'number' | 'array' | 'rating' | 'price' | 'image';
+	suffix?: string;
+	displayOrder: number;
 }
 
 export interface ComparisonSchema {
@@ -59,59 +66,79 @@ export interface CategoryStats {
  * Get all available categories by scanning content folders
  */
 export async function getAllCategories(): Promise<string[]> {
-	const modules = import.meta.glob('/src/content/**/*.md');
-	const categories = new Set<string>();
-	
-	Object.keys(modules).forEach(path => {
-		// Extract category from path: /src/content/tvs/product.md -> tvs
-		const pathParts = path.split('/');
-		const categoryIndex = pathParts.findIndex(part => part === 'content') + 1;
+	try {
+		// Use Vite's glob import to find all JSON files
+		const modules = import.meta.glob('/src/content/*/*.json');
+		const categories = new Set<string>();
 		
-		if (categoryIndex > 0 && categoryIndex < pathParts.length - 1) {
-			const category = pathParts[categoryIndex];
-			categories.add(category);
-			console.log(`Found category: ${category}`);
-		}
-	});
-	
-	return Array.from(categories).sort();
+		Object.keys(modules).forEach(path => {
+			// Extract category from path: /src/content/tv/samsung-55.json -> tv
+			const pathParts = path.split('/');
+			const categoryIndex = pathParts.findIndex(part => part === 'content') + 1;
+			
+			if (categoryIndex > 0 && categoryIndex < pathParts.length - 1) {
+				const category = pathParts[categoryIndex];
+				categories.add(category);
+				console.log(`Found category: ${category} from path: ${path}`);
+			}
+		});
+		
+		return Array.from(categories).sort();
+	} catch (error) {
+		console.error('Error loading categories:', error);
+		return [];
+	}
 }
 
 /**
  * Load all products for a specific category
  */
 export async function loadProductsByCategory(category: string): Promise<Product[]> {
-	const modules = import.meta.glob('/src/content/**/*.md');
-	const products: Product[] = [];
-	console.log(`Loading products for category: ${category}`);
-	for (const path in modules) {
-		if (path.includes(`/content/${category}/`)) {
-			try {
-				const module: any = await modules[path]();
-				const slug = path.split('/').pop()?.replace('.md', '') || '';
-				
-				// Ensure we have the required fields
-				const product: Product = {
-					...module.metadata,
-					slug,
-					content: '',
-					category,
-					// Add default values for missing fields
-					price: module.metadata?.price || 0,
-					rating: module.metadata?.rating || null,
-					image: module.metadata?.image || `/images/${category}/placeholder.jpg`,
-					affiliate_link: module.metadata?.affiliate_link || '#'
-				};
-				
-				products.push(product);
-			} catch (error) {
-				console.error(`Error loading product from ${path}:`, error);
+	try {
+		// Load all JSON files and filter by category
+		const allModules = import.meta.glob('/src/content/*/*.json');
+		const products: Product[] = [];
+		
+		console.log(`Loading products for category: ${category}`);
+		
+		for (const path in allModules) {
+			// Check if this file belongs to the requested category
+			if (path.includes(`/content/${category}/`)) {
+				try {
+					console.log(`Processing file: ${path}`);
+					const module: any = await allModules[path]();
+					const slug = path.split('/').pop()?.replace('.json', '') || '';
+					
+					// Parse the JSON content
+					const productData = module.default || module;
+					
+					// Ensure we have the required fields
+					const product: Product = {
+						...productData,
+						slug,
+						category,
+						// Add default values for missing fields
+						price: productData?.price || 0,
+						rating: productData?.rating || null,
+						image: productData?.image || `/images/${category}/placeholder.jpg`,
+						affiliate_link: productData?.affiliate_link || '#'
+					};
+					
+					console.log(`Loaded product: ${product.name}`);
+					products.push(product);
+				} catch (error) {
+					console.error(`Error loading product from ${path}:`, error);
+				}
 			}
 		}
+		
+		console.log(`Loaded ${products.length} products for category: ${category}`);
+		// Sort products by name for consistent ordering
+		return products.sort((a, b) => a.name?.localeCompare(b.name) || 0);
+	} catch (error) {
+		console.error(`Error loading products for category ${category}:`, error);
+		return [];
 	}
-	console.log(`Loaded ${products.length} products for category: ${category}`);
-	// Sort products by name for consistent ordering
-	return products.sort((a, b) => a.name?.localeCompare(b.name) || 0);
 }
 
 /**
@@ -119,23 +146,123 @@ export async function loadProductsByCategory(category: string): Promise<Product[
  */
 export async function loadProduct(category: string, slug: string): Promise<Product | null> {
 	try {
-		const module: any = await import(`/src/content/${category}/${slug}.md`);
+		// Use dynamic import for the specific JSON file
+		const module: any = await import(`../../content/${category}/${slug}.json`);
+		const productData = module.default || module;
 		
 		return {
-			...module.metadata,
+			...productData,
 			slug,
-			content: module.default,
 			category,
 			// Add default values
-			price: module.metadata?.price || 0,
-			rating: module.metadata?.rating || null,
-			image: module.metadata?.image || `/images/${category}/placeholder.jpg`,
-			affiliate_link: module.metadata?.affiliate_link || '#'
+			price: productData?.price || 0,
+			rating: productData?.rating || null,
+			image: productData?.image || `/images/${category}/placeholder.jpg`,
+			affiliate_link: productData?.affiliate_link || '#'
 		};
 	} catch (error) {
 		console.error(`Error loading product ${category}/${slug}:`, error);
 		return null;
 	}
+}
+
+/**
+ * Generate comparison fields dynamically from products
+ * This creates the field definitions for the comparison table
+ */
+export function generateComparisonFields(products: Product[]): ComparisonField[] {
+	if (products.length === 0) return [];
+	
+	const fieldCounts = new Map<string, number>();
+	const fieldTypes = new Map<string, string>();
+	const fieldValues = new Map<string, Set<any>>();
+	
+	// Analyze all products to understand field usage
+	products.forEach(product => {
+		Object.entries(product).forEach(([key, value]) => {
+			// Skip internal fields
+			if (['slug', 'category'].includes(key)) return;
+			
+			fieldCounts.set(key, (fieldCounts.get(key) || 0) + 1);
+			
+			if (!fieldValues.has(key)) {
+				fieldValues.set(key, new Set());
+			}
+			
+			if (value !== undefined && value !== null && value !== '') {
+				if (Array.isArray(value)) {
+					fieldTypes.set(key, 'array');
+					value.forEach(item => fieldValues.get(key)?.add(item));
+				} else {
+					if (key === 'rating') {
+						fieldTypes.set(key, 'rating');
+					} else if (key === 'price' || key === 'original_price') {
+						fieldTypes.set(key, 'price');
+					} else if (key === 'image') {
+						fieldTypes.set(key, 'image');
+					} else if (typeof value === 'number') {
+						fieldTypes.set(key, 'number');
+					} else {
+						fieldTypes.set(key, 'text');
+					}
+					fieldValues.get(key)?.add(value);
+				}
+			}
+		});
+	});
+	
+	// Define display order for common fields
+	const fieldOrder: Record<string, number> = {
+		'name': 0,
+		'brand': 5,
+		'model': 10,
+		'price': 15,
+		'original_price': 16,
+		'rating': 20,
+		'screen_size': 25,
+		'resolution': 30,
+		'display_type': 35,
+		'smart_platform': 40,
+		'hdr_support': 45,
+		'refresh_rate': 50,
+		'gaming_features': 55,
+		'connectivity': 60,
+		'audio': 65,
+		'dimensions': 70,
+		'weight': 75,
+		'energy_rating': 80,
+		'key_specs': 85,
+		'pros': 90,
+		'cons': 95,
+		'featured': 100,
+		'discount': 105
+	};
+	
+	// Generate comparison fields
+	const fields: ComparisonField[] = [];
+	
+	fieldCounts.forEach((count, key) => {
+		// Only include fields that appear in at least one product and have values
+		if (count > 0 && (fieldValues.get(key)?.size || 0) > 0) {
+			// Skip certain fields from comparison table
+			if (['image', 'affiliate_link', 'slug', 'category', 'featured', 'discount', 'original_price'].includes(key)) {
+				return;
+			}
+			
+			const fieldType = fieldTypes.get(key) || 'text';
+			
+			fields.push({
+				key,
+				label: getFieldLabel(key),
+				type: fieldType as any,
+				suffix: getFieldSuffix(key),
+				displayOrder: fieldOrder[key] || 1000
+			});
+		}
+	});
+	
+	// Sort by display order
+	return fields.sort((a, b) => a.displayOrder - b.displayOrder);
 }
 
 /**
@@ -148,7 +275,7 @@ export function generateComparisonSchema(products: Product[]): ComparisonSchema 
 	products.forEach(product => {
 		Object.entries(product).forEach(([key, value]) => {
 			// Skip internal fields
-			if (['slug', 'content', 'category'].includes(key)) return;
+			if (['slug', 'category'].includes(key)) return;
 			
 			if (!schema[key]) {
 				schema[key] = {
@@ -163,8 +290,16 @@ export function generateComparisonSchema(products: Product[]): ComparisonSchema 
 			
 			// Track unique values
 			if (value !== undefined && value !== null && value !== '') {
-				if (!schema[key].values.includes(value)) {
-					schema[key].values.push(value);
+				if (Array.isArray(value)) {
+					value.forEach(item => {
+						if (!schema[key].values.includes(item)) {
+							schema[key].values.push(item);
+						}
+					});
+				} else {
+					if (!schema[key].values.includes(value)) {
+						schema[key].values.push(value);
+					}
 				}
 				schema[key].hasValues = true;
 			}
@@ -187,7 +322,7 @@ export function generateFilterOptions(products: Product[], schema: ComparisonSch
 	
 	Object.entries(schema).forEach(([field, config]) => {
 		// Skip fields that shouldn't be filterable
-		if (['name', 'content', 'slug', 'image', 'affiliate_link'].includes(field)) {
+		if (['name', 'slug', 'image', 'affiliate_link'].includes(field)) {
 			return;
 		}
 		
@@ -247,6 +382,7 @@ function getFieldLabel(field: string): string {
 		price: 'Preço',
 		rating: 'Avaliação',
 		brand: 'Marca',
+		model: 'Modelo',
 		screen_size: 'Tamanho da Tela',
 		resolution: 'Resolução',
 		display_type: 'Tipo de Display',
@@ -257,7 +393,14 @@ function getFieldLabel(field: string): string {
 		waterproof_rating: 'Resistência à Água',
 		smart_platform: 'Sistema Smart',
 		hdr_support: 'Suporte HDR',
-		gaming_features: 'Recursos para Jogos'
+		gaming_features: 'Recursos para Jogos',
+		audio: 'Áudio',
+		dimensions: 'Dimensões',
+		energy_rating: 'Classificação Energética',
+		key_specs: 'Especificações Principais',
+		pros: 'Pontos Positivos',
+		cons: 'Pontos Negativos',
+		name: 'Nome'
 	};
 	
 	return labels[field] || field.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
@@ -313,7 +456,8 @@ export async function searchProducts(query: string, category: string | null = nu
 			product.brand,
 			product.model,
 			...(Array.isArray(product.key_specs) ? product.key_specs : []),
-			product.content // Search in content too
+			...(Array.isArray(product.pros) ? product.pros : []),
+			...(Array.isArray(product.cons) ? product.cons : [])
 		].join(' ').toLowerCase();
 		
 		return searchableText.includes(searchTerm);
