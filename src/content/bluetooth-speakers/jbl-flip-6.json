@@ -1,0 +1,34 @@
+{
+  "name": "JBL Flip 6 Caixa de Som Bluetooth Portátil",
+  "brand": "JBL",
+  "model": "JBLFLIP6",
+  "price": 449,
+  "original_price": 599,
+  "affiliate_link": "https://amzn.to/jbl-flip-6",
+  "battery_life": 12,
+  "waterproof_rating": "IP67",
+  "connectivity": ["Bluetooth 5.1", "USB-C", "3.5mm"],
+  "power_output": 30,
+  "frequency_response": "63Hz - 20kHz",
+  "weight": 0.55,
+  "dimensions": "17.8 x 6.8 x 7.2 cm",
+  "special_features": ["JBL PartyBoost", "Carregamento rápido USB-C"],
+  "colors": ["Preto", "Azul", "Vermelho", "Rosa", "Verde", "Branco"],
+  "rating": 4.4,
+  "image": "/images/bluetooth-speakers/jbl-flip-6.jpg",
+  "discount": 25,
+  "key_specs": ["30W RMS", "IP67", "12h bateria", "PartyBoost", "Bluetooth 5.1"],
+  "pros": [
+    "Som potente para o tamanho",
+    "Resistência IP67 completa",
+    "Bateria de longa duração",
+    "Conectividade PartyBoost",
+    "Design robusto e portátil"
+  ],
+  "cons": [
+    "Sem entrada para cartão SD",
+    "Não tem alça para transporte",
+    "Graves podem distorcer no volume máximo"
+  ],
+  "description": "A JBL Flip 6 representa a mais recente evolução da linha de caixas de som portáteis mais popular do mundo. Com melhorias significativas em áudio, conectividade e resistência, ela mantém o DNA que tornou a série Flip um sucesso global. Possui certificação IP67 completa (submersível até 1 metro por 30 minutos), 30W RMS de potência, 12 horas de bateria e conectividade PartyBoost para conectar múltiplas caixas JBL."
+}
