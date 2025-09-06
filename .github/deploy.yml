@@ -34,8 +34,8 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          projectName: 'your-project-name' # Replace with your actual project name
-          directory: 'build'
+          projectName: 'advanced-comparison' # Replace with your actual project name
+          directory: '.svelte-kit/cloudflare'
           # Optional: Use git branch for deployment
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
           wranglerVersion: '3'
