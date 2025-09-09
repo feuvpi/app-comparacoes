@@ -1,0 +1,37 @@
+{
+  "name": "JBL Clip 5 - Ultra-Portable Bluetooth Speaker",
+  "brand": "JBL",
+  "model": "Clip 5",
+  "price": 69.95,
+  "original_price": 79.99,
+  "affiliate_link": "https://www.amazon.com/JBL-Clip-Ultra-Portable-Waterproof-Integrated/dp/B0CTP56C5R/ref=zg_bs_g_7073956011_d_sccl_4/131-8774751-7631420?th=1",
+  "battery_life": 12,
+  "playtime_boost": 3,
+  "waterproof_rating": "IP67",
+  "connectivity": ["Bluetooth", "Auracast Multi-Speaker"],
+  "power_output": 10,
+  "driver_size": "3.4 Inches",
+  "special_technology": ["JBL Pro Sound", "Auracast"],
+  "weight": 0.45,
+  "dimensions": "13.8 x 8.6 x 4.6 cm",
+  "special_features": ["Integrated Carabiner", "IP67 Waterproof & Dustproof", "Playtime Boost", "Recycled Materials"],
+  "colors": ["Black", "Blue", "Camouflage", "Red", "White"],
+  "rating": 4.8,
+  "review_count": 4669,
+  "image": "/images/bluetooth-speakers/jbl-clip-5.jpg",
+  "discount": 13,
+  "key_specs": ["IP67 Waterproof & Dustproof", "12h Battery + 3h Boost", "Integrated Carabiner", "JBL Pro Sound", "Auracast Connectivity"],
+  "pros": [
+    "Som surpreendente para o tamanho compacto",
+    "Carabiner integrado muito prático para transporte",
+    "Proteção IP67 completa contra água e poeira",
+    "Bateria de longa duração com modo de economia",
+    "Construção de alta qualidade com materiais reciclados"
+  ],
+  "cons": [
+    "Graves limitados devido ao tamanho pequeno",
+    "Volume máximo pode distorcer em certas frequências",
+    "Preço mais elevado que concorrentes de tamanho similar"
+  ],
+  "description": "O JBL Clip 5 é um speaker Bluetooth ultra-portátil com carabiner integrado, proteção IP67 contra água e poeira, e até 12 horas de reprodução (com opção de boost para mais 3 horas). Com tecnologia JBL Pro Sound e Auracast para conexão multi-speaker, oferece som surpreendentemente potente para seu tamanho compacto. Perfeito para aventuras ao ar livre, viagens e uso diário."
+}

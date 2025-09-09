@@ -1,0 +1,37 @@
+{
+  "name": "Anker Soundcore 2 Portable Bluetooth Speaker",
+  "brand": "Anker",
+  "model": "Soundcore 2",
+  "price": 29.99,
+  "original_price": 44.99,
+  "affiliate_link": "https://www.amazon.com/Anker-Soundcore-Bluetooth-Exclusive-Water-Resistant/dp/B01MTB55WH/ref=zg_bs_g_7073956011_d_sccl_1/131-8774751-7631420?th=1",
+  "battery_life": 24,
+  "battery_capacity": "5200mAh",
+  "waterproof_rating": "IPX7",
+  "connectivity": ["Bluetooth 5", "Wireless Stereo Pairing"],
+  "power_output": 12,
+  "driver_type": "Dual Neodymium Drivers",
+  "special_technology": ["BassUp", "Digital Signal Processor"],
+  "weight": 0.55,
+  "dimensions": "16.5 x 6.0 x 5.3 cm",
+  "special_features": ["IPX7 Waterproof", "24-Hour Playtime", "Stereo Pairing", "BassUp Technology"],
+  "colors": ["Black", "Blue", "Red"],
+  "rating": 4.6,
+  "review_count": 137914,
+  "image": "/images/bluetooth-speakers/anker-soundcore-2.jpg",
+  "discount": 33,
+  "key_specs": ["IPX7 Waterproof", "24h Battery Life", "BassUp Technology", "12W Output", "Bluetooth 5"],
+  "pros": [
+    "Excelente qualidade de som para o preço",
+    "Bateria de longa duração (24 horas)",
+    "Proteção IPX7 completa contra água",
+    "Compacto e portátil",
+    "Ótimo valor pelo investimento"
+  ],
+  "cons": [
+    "Graves podem ser limitados em volumes muito altos",
+    "Design básico comparado a concorrentes",
+    "Sem entrada auxiliar 3.5mm em alguns modelos"
+  ],
+  "description": "O Anker Soundcore 2 é um speaker Bluetooth portátil com proteção IPX7 à água, bateria de 24 horas de duração e tecnologia BassUp para graves intensos. Com 12W de potência, drivers duplos de neodímio e conectividade Bluetooth 5, oferece som estéreo de qualidade para uso em casa, viagens ou aventuras ao ar livre. É o best-seller em speakers portáteis na Amazon com mais de 137 mil avaliações."
+}
