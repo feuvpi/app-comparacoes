@@ -1,0 +1,39 @@
+{
+  "name": "Bose SoundLink Flex Portable Bluetooth Speaker (2nd Gen)",
+  "brand": "Bose",
+  "model": "SoundLink Flex 2nd Gen",
+  "price": 149.00,
+  "original_price": 149.00,
+  "affiliate_link": "https://www.amazon.com/Bose-SoundLink-Bluetooth-Waterproof-Dustproof/dp/B0D6WD2QSQ/ref=zg_bs_g_7073956011_d_sccl_7/131-8774751-7631420?th=1",
+  "battery_life": 12,
+  "battery_capacity": "3200mAh",
+  "charge_time": "4 hours",
+  "waterproof_rating": "IP67",
+  "connectivity": ["Bluetooth 5.3", "Multipoint Technology"],
+  "bluetooth_range": "30 feet",
+  "special_technology": ["PositionIQ", "Hi-Fi Audio", "Stereo/Party Mode"],
+  "weight": 0.6,
+  "dimensions": "21.69 x 9.53 x 5.33 cm",
+  "enclosure_material": "Silicone-wrapped plastic",
+  "special_features": ["IP67 Waterproof & Dustproof", "PositionIQ Technology", "Utility Loop", "Multi-device Pairing"],
+  "colors": ["Black", "Stone Blue", "White Smoke"],
+  "rating": 4.7,
+  "review_count": 5979,
+  "image": "/images/bluetooth-speakers/bose-soundlink-flex.jpg",
+  "discount": 0,
+  "key_specs": ["IP67 Waterproof & Dustproof", "12h Battery Life", "PositionIQ Technology", "Bluetooth 5.3", "Hi-Fi Audio Quality"],
+  "pros": [
+    "Qualidade de áudio excepcional com graves profundos",
+    "Construção premium à prova d'água e poeira IP67",
+    "Tecnologia PositionIQ ajusta o som automaticamente",
+    "Bateria de 12 horas com carregamento rápido",
+    "Conectividade Bluetooth 5.3 estável com multipoint"
+  ],
+  "cons": [
+    "Preço premium comparado a concorrentes",
+    "Sem entrada auxiliar 3.5mm",
+    "Carregamento via cabo proprietário (não USB-C)",
+    "App companion com funcionalidades limitadas"
+  ],
+  "description": "O Bose SoundLink Flex (2ª Geração) é um speaker Bluetooth portátil premium com qualidade de áudio Hi-Fi, proteção IP67 completa e tecnologia PositionIQ que ajusta automaticamente o som conforme a posição. Com 12 horas de bateria, Bluetooth 5.3 com multipoint e construção durável revestida em silicone, oferece performance sonora excepcional em um formato compacto e resistente para uso indoor e outdoor."
+}

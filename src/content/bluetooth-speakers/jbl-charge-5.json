@@ -1,0 +1,37 @@
+{
+  "name": "JBL CHARGE 5 - Portable Waterproof Bluetooth Speaker",
+  "brand": "JBL",
+  "model": "CHARGE 5",
+  "price": 129.95,
+  "original_price": 149.95,
+  "affiliate_link": "https://www.amazon.com/JBL-CHARGE-Portable-Bluetooth-Waterproof/dp/B08X4YMTPM/ref=zg_bs_g_7073956011_d_sccl_17/131-8774751-7631420?th=1",
+  "battery_life": 20,
+  "waterproof_rating": "IP67",
+  "connectivity": ["Bluetooth", "JBL PartyBoost", "USB Charge Out"],
+  "power_output": 30,
+  "driver_configuration": ["Long Excursion Driver", "Separate Tweeter", "Dual Bass Radiators"],
+  "special_technology": ["JBL Pro Sound", "PartyBoost", "Powerbank"],
+  "weight": 0.96,
+  "dimensions": "22.3 x 9.6 x 9.3 cm",
+  "special_features": ["IP67 Waterproof & Dustproof", "20h Playtime", "Built-in Powerbank", "PartyBoost Connectivity"],
+  "colors": ["Black", "Blue", "Red", "Squad", "Teal"],
+  "rating": 4.7,
+  "review_count": 33692,
+  "image": "/images/bluetooth-speakers/jbl-charge-5.jpg",
+  "discount": 13,
+  "key_specs": ["IP67 Waterproof", "20h Battery Life", "Built-in Powerbank", "JBL Pro Sound", "PartyBoost"],
+  "pros": [
+    "Som excepcional com graves profundos e agudos claros",
+    "Bateria de longa duração (até 20 horas)",
+    "Powerbank integrado para carregar dispositivos",
+    "Construção robusta com proteção IP67 completa",
+    "Conectividade PartyBoost para múltiplos speakers"
+  ],
+  "cons": [
+    "Alguns usuários relatam problemas de bateria após alguns meses",
+    "Preço mais elevado que concorrentes diretos",
+    "Pode ser pesado para transporte prolongado",
+    "Funcionalidade mista relatada por alguns usuários"
+  ],
+  "description": "O JBL CHARGE 5 é um speaker Bluetooth portátil com proteção IP67, bateria de 20 horas e powerbank integrado. Com driver de excursão longa, tweeter separado e dois radiadores de graves, oferece som JBL Pro Sound de alta qualidade. Perfecto para festas, praia, piscina e aventuras ao ar livre, com conectividade PartyBoost para conectar múltiplos speakers."
+}

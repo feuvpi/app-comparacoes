@@ -1,0 +1,35 @@
+{
+  "name": "Beats Pill - Portable Bluetooth Speaker",
+  "brand": "Beats",
+  "model": "Pill",
+  "price": 85.43,
+  "original_price": 85.43,
+  "affiliate_link": "https://www.amazon.com/Beats-Pill-2024-release-Compatible/dp/B0D4SX9RC6/ref=zg_bs_g_7073956011_d_sccl_28/131-8774751-7631420?th=1",
+  "battery_life": 24,
+  "waterproof_rating": "IP67",
+  "connectivity": ["Bluetooth", "USB-C", "Find My Device"],
+  "power_output": 20,
+  "woofer_size": "3.9 inches",
+  "tweeter_type": "Redesigned for stability",
+  "special_features": ["24H Battery Life", "IP67 Water & Dust Resistant", "Stereo Pairing", "Phone Charging", "Lossless Audio via USB-C"],
+  "colors": ["Matte Black", "Red", "Gold"],
+  "rating": 4.7,
+  "review_count": 2589,
+  "image": "/images/bluetooth-speakers/beats-pill.jpg",
+  "discount": 0,
+  "key_specs": ["24-hour battery", "IP67 rating", "Stereo pairing", "USB-C lossless audio", "Apple/Android compatible"],
+  "pros": [
+    "Excellent sound quality with deep bass",
+    "Seamless connectivity with Apple devices",
+    "Long battery life with phone charging capability",
+    "IP67 waterproof and dust resistant",
+    "Compact and portable with included lanyard"
+  ],
+  "cons": [
+    "Premium price compared to competitors",
+    "Bass can overwhelm mids at higher volumes",
+    "Limited EQ customization options",
+    "No built-in voice assistant (only activation)"
+  ],
+  "description": "The Beats Pill delivers powerful, room-filling sound with up to 24 hours of battery life. Featuring a custom racetrack woofer for 90% more air displacement, IP67 water and dust resistance, and seamless Apple/Android compatibility. Includes stereo pairing, USB-C lossless audio support, and can even charge your devices. Perfect for home, travel, and outdoor use with premium sound quality."
+}

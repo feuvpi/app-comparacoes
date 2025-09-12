@@ -1,0 +1,38 @@
+{
+  "name": "JBL Go 4 - Ultra-Portable Bluetooth Speaker",
+  "brand": "JBL",
+  "model": "Go 4",
+  "price": 49.95,
+  "original_price": 49.95,
+  "affiliate_link": "https://www.amazon.com/JBL-Ultra-Portable-Waterproof-Dustproof-Built/dp/B0CTNWBT1Z/ref=zg_bs_g_7073956011_d_sccl_10/131-8774751-7631420?th=1",
+  "battery_life": 7,
+  "playtime_boost": 2,
+  "waterproof_rating": "IP67",
+  "connectivity": ["Bluetooth", "Auracast Multi-Speaker"],
+  "power_output": 8,
+  "driver_type": "Dynamic Driver",
+  "driver_size": "3 Inches",
+  "special_technology": ["JBL Pro Sound", "Auracast"],
+  "weight": 0.35,
+  "dimensions": "8.7 x 7.1 x 4.2 cm",
+  "special_features": ["Built-in Carrying Loop", "IP67 Waterproof & Dustproof", "Playtime Boost", "Recycled Materials", "FSC-Certified Packaging"],
+  "colors": ["Black", "Blue", "Green", "Pink", "Red", "White"],
+  "rating": 4.8,
+  "review_count": 8346,
+  "image": "/images/bluetooth-speakers/jbl-go-4.jpg",
+  "discount": 0,
+  "key_specs": ["IP67 Waterproof & Dustproof", "7h Battery + 2h Boost", "Built-in Carrying Loop", "JBL Pro Sound", "Auracast Connectivity"],
+  "pros": [
+    "Som claro e de qualidade surpreendente para o tamanho",
+    "Extremamente compacto e portátil com alça integrada",
+    "Proteção IP67 completa contra água e poeira",
+    "Conexão Bluetooth fácil e estável",
+    "Feito com materiais reciclados e embalagem sustentável"
+  ],
+  "cons": [
+    "Autonomia de bateria menor que modelos maiores (7 horas)",
+    "Graves limitados devido ao tamanho ultra-compacto",
+    "Sem carregamento rápido (leva até 3 horas para carregar totalmente)"
+  ],
+  "description": "O JBL Go 4 é o speaker Bluetooth mais compacto da linha JBL, com proteção IP67 contra água e poeira, até 7 horas de reprodução (com opção de boost para mais 2 horas) e tecnologia JBL Pro Sound. Com alça de transporte integrada, construção com materiais reciclados e conectividade Auracast para multi-speaker, é perfeito para quem prioriza máxima portabilidade sem sacrificar qualidade de som."
+}

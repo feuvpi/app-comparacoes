@@ -1,0 +1,37 @@
+{
+  "name": "JBL FLIP 5 Waterproof Portable Bluetooth Speaker",
+  "brand": "JBL",
+  "model": "FLIP 5",
+  "price": 89.95,
+  "original_price": 99.95,
+  "affiliate_link": "https://www.amazon.com/JBL-Waterproof-Portable-Bluetooth-Speaker/dp/B07QK2SPP7/ref=zg_bs_g_7073956011_d_sccl_6/131-8774751-7631420?th=1",
+  "battery_life": 12,
+  "waterproof_rating": "IPX7",
+  "connectivity": ["Bluetooth", "PartyBoost Stereo Pairing"],
+  "power_output": 20,
+  "driver_size": "10 cm Woofer",
+  "frequency_response": "20Hz - 20kHz",
+  "weight": 0.54,
+  "dimensions": "18.1 x 6.9 x 7.2 cm",
+  "special_features": ["IPX7 Waterproof", "PartyBoost", "12-Hour Playtime", "JBL Original Pro Sound"],
+  "colors": ["Black", "Blue", "Camouflage", "Red", "Pink", "White", "Green"],
+  "rating": 4.8,
+  "review_count": 81922,
+  "image": "/images/bluetooth-speakers/jbl-flip-5.jpg",
+  "discount": 10,
+  "key_specs": ["IPX7 Waterproof", "20W Output", "12h Battery", "PartyBoost", "JBL Pro Sound"],
+  "pros": [
+    "Excelente qualidade de som JBL para o tamanho",
+    "Proteção IPX7 completa contra água",
+    "Conectividade PartyBoost para múltiplos speakers",
+    "Design compacto e portátil",
+    "Boa relação custo-benefício"
+  ],
+  "cons": [
+    "Alguns usuários reportam problemas de bateria com o tempo",
+    "Sem entrada P2 (auxiliar) para conexão com fio",
+    "Pode ter problemas de ligação em algumas unidades",
+    "Graves limitados em volume máximo"
+  ],
+  "description": "O JBL FLIP 5 é um speaker Bluetooth portátil com proteção IPX7 à água, 12 horas de bateria e tecnologia PartyBoost para conectar múltiplos speakers. Com 20W de potência e som JBL Pro Sound característico, oferece performance robusta em um design compacto. Ideal para uso em piscina, praia, festas e atividades ao ar livre, sendo um dos speakers portáteis mais populares da JBL."
+}

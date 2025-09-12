@@ -1,0 +1,39 @@
+{
+  "name": "JBL PartyBox Stage 320 - Portable Party Speaker",
+  "brand": "JBL",
+  "model": "PartyBox Stage 320",
+  "price": 599.95,
+  "original_price": 679.95,
+  "affiliate_link": "https://www.amazon.com/JBL-PartyBox-Stage-320-telescopic/dp/B0CTD6V6S6/ref=zg_bs_g_7073956011_d_sccl_21/131-8774751-7631420?th=1",
+  "battery_life": 18,
+  "fast_charge": "2 hours playback from 10-minute charge",
+  "water_resistance": "IPX4 Splashproof",
+  "connectivity": ["Bluetooth", "Auxiliary", "Dual Guitar/Mic Inputs", "USB", "Auracast Multi-Speaker"],
+  "power_output": 240,
+  "woofer_size": "6.5 inches (x2)",
+  "tweeter_size": "1 inch (x2)",
+  "special_features": ["Synchronized Light Show", "Replaceable Battery", "Telescopic Handle", "Sturdy Wheels", "Karaoke EQ", "App Control"],
+  "weight": 36.38,
+  "weight_unit": "pounds",
+  "dimensions": "15.16 x 13.19 x 26.34 inches",
+  "colors": ["Black", "White"],
+  "rating": 4.8,
+  "review_count": 1004,
+  "image": "/images/party-speakers/jbl-partybox-stage-320.jpg",
+  "discount": 12,
+  "key_specs": ["240W Output Power", "18-Hour Battery", "Synchronized Light Show", "IPX4 Splashproof", "Replaceable Battery"],
+  "pros": [
+    "Incredible sound quality with powerful bass response",
+    "Professional-grade light show synchronized to music",
+    "Excellent battery life with fast charging capability",
+    "Highly portable with telescopic handle and sturdy wheels",
+    "Multiple connectivity options including mic/guitar inputs"
+  ],
+  "cons": [
+    "Heavy at over 36 pounds for transportation",
+    "IPX4 rating only protects against splashes, not full water immersion",
+    "Replaceable battery sold separately adds to total cost",
+    "Large footprint requires significant space"
+  ],
+  "description": "The JBL PartyBox Stage 320 is a powerful portable party speaker featuring 240W of output power, dual 6.5-inch woofers, and a spectacular synchronized light show. With up to 18 hours of battery life, IPX4 splash resistance, and versatile connectivity including mic/guitar inputs, it's designed to deliver professional-grade sound for parties, events, and outdoor gatherings. The telescopic handle and sturdy wheels make it surprisingly portable despite its powerful performance."
+}

@@ -1,0 +1,40 @@
+{
+  "name": "ANCOON 80W Bluetooth Speaker with Bass, LED Lights",
+  "brand": "ANCOON",
+  "model": "Wireless Jobsite Speaker",
+  "price": 59.99,
+  "original_price": 89.99,
+  "affiliate_link": "https://www.amazon.com/ANCOON-Speakers-Bluetooth-Wireless-Waterproof/dp/B0DHX88N8Z/ref=zg_bs_g_7073956011_d_sccl_9/131-8774751-7631420?th=1",
+  "battery_life": 20,
+  "battery_capacity": "10000mAh",
+  "waterproof_rating": "IPX6",
+  "connectivity": ["Bluetooth 5.3", "TWS Stereo Pairing", "USB Powerbank", "MP3 Playback"],
+  "power_output": 80,
+  "peak_power": 80,
+  "driver_size": "3 Inches",
+  "driver_type": "Dual Dynamic Drivers with Reinforced Magnets",
+  "special_features": ["LED Light Show", "Deep Bass Technology", "Shock-Resistant", "Powerbank Function", "Built-in Handle"],
+  "enclosure_material": "ABS + Metal",
+  "colors": ["Black", "Red", "Blue"],
+  "rating": 4.6,
+  "review_count": 1401,
+  "dimensions": "26.4 x 16.0 x 14.5 cm",
+  "weight": 2.18,
+  "image": "/images/bluetooth-speakers/ancoon-80w-jobsite.jpg",
+  "discount": 33,
+  "key_specs": ["80W Peak Power", "IPX6 Waterproof", "20h Playtime", "TWS Stereo", "LED Lights"],
+  "pros": [
+    "Potência extrema (80W) para ambientes ruidosos",
+    "Bateria de longa duração com 10000mAh",
+    "Design robusto e resistente a impactos",
+    "Função powerbank para carregar dispositivos",
+    "Excelente valor pelo preço"
+  ],
+  "cons": [
+    "Peso elevado (2.18kg) para transporte",
+    "Qualidade de som prioriza volume sobre refinamento",
+    "Luzes LED podem ser excessivas para alguns usuários",
+    "Proteção IPX6 (não totalmente submersível)"
+  ],
+  "description": "O ANCOON Bluetooth Speaker é um speaker robusto de 80W com proteção IPX6, bateria de 10000mAh para 20 horas de reprodução e luzes LED multicoloridas. Ideal para obras, garagens e ambientes externos, oferece som potente com tecnologia Deep Bass, função TWS para par estéreo e capacidade de carregar outros dispositivos via USB. Perfeito para quem precisa de volume e durabilidade em ambientes desafiadores."
+}
