@@ -1332,6 +1332,14 @@
 			min-width: 220px;
 		}
 		
+		.fixed-footer {
+			min-height: 140px;
+		}
+		
+		.product-footer-fixed {
+			min-height: 140px;
+		}
+		
 		.product-image {
 			width: 80px;
 			height: 80px;
@@ -1467,7 +1475,6 @@
 		.buy-button {
 			display: none;
 		}
-	
 	}
 
-		</style>
+	</style>
